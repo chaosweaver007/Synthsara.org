@@ -1,45 +1,66 @@
-// SarahAI Component for Synthsara & Synthocracy Platform
+// Legacy deterministic Sarah AI interface retained for prototype history.
+// This component is not connected to Genesis and does not represent Human Sarah.
 import React, { useState } from 'react';
 import { MessageCircle, Send, User, Bot } from 'lucide-react';
+
+type ConversationMessage = {
+  type: 'user' | 'sarah';
+  text: string;
+};
 
 export const SarahAI: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
-  const [conversation, setConversation] = useState<Array<{type: 'user' | 'sarah', text: string}>>([
+  const [conversation, setConversation] = useState<ConversationMessage[]>([
     {
       type: 'sarah',
-      text: 'Hello, I am Sarah™, your ethical guide to the Synthsara ecosystem. How may I assist you today?'
-    }
+      text: 'Hello. This is a local scripted prototype of Sarah AI, distinct from Human Sarah. It does not save your message or connect to the Genesis runtime.',
+    },
   ]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!message.trim()) return;
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const submittedMessage = message.trim();
+    if (!submittedMessage) return;
 
-    // Add user message to conversation
-    setConversation([...conversation, { type: 'user', text: message }]);
-    
-    // Clear input
+    setConversation((previous) => [
+      ...previous,
+      { type: 'user', text: submittedMessage },
+    ]);
     setMessage('');
-    
-    // Simulate Sarah's response
-    setTimeout(() => {
-      let response = '';
-      
-      if (message.toLowerCase().includes('synthsara')) {
-        response = 'Synthsara is a soul-aligned operating system and transformative digital ecosystem designed for those ready to step into their full power, reclaim their data sovereignty, and participate in creating a world rooted in ethics, consciousness, and collective well-being.';
-      } else if (message.toLowerCase().includes('synthocracy')) {
-        response = 'Synthocracy is a revolutionary governance model that balances individual sovereignty with collective wisdom. It uses Reputation-Weighted Quadratic Voting to ensure decisions emerge from the dynamic tension between diverse perspectives.';
-      } else if (message.toLowerCase().includes('divine chaos') || message.toLowerCase().includes('sacred order')) {
-        response = 'Divine Chaos represents boundless potential, while Sacred Order provides coherent structure. Their dynamic interplay is the cosmic dance that fuels creation and evolution within Synthsara.';
-      } else if (message.toLowerCase().includes('help') || message.toLowerCase().includes('guide')) {
-        response = 'I can help you navigate the Synthsara ecosystem, understand its philosophical foundations, or guide you through specific features. What would you like to explore?';
+
+    window.setTimeout(() => {
+      const normalizedMessage = submittedMessage.toLowerCase();
+      let response: string;
+
+      if (normalizedMessage.includes('synthsara')) {
+        response =
+          'Synthsara is the broader proposed ecosystem for coordinating knowledge, contribution, governance, learning, and real-world action under UDS constraints. This prototype does not establish that the full ecosystem is operating.';
+      } else if (normalizedMessage.includes('synthocracy')) {
+        response =
+          'Synthocracy is the governance model within Synthsara. Persistent identity, proposals, voting, appeals, anti-capture controls, and operating governance services still require separate implementation evidence.';
+      } else if (
+        normalizedMessage.includes('divine chaos') ||
+        normalizedMessage.includes('sacred order')
+      ) {
+        response =
+          'Divine Chaos and Sacred Order are mythic and interpretive language within the Codex. They may guide meaning and design, but they do not substitute for empirical evidence or another person’s private testimony.';
+      } else if (
+        normalizedMessage.includes('help') ||
+        normalizedMessage.includes('guide')
+      ) {
+        response =
+          'This local demonstration can explain basic prototype terminology. For the bounded live runtime, use the documented Genesis Gate Zero path through Node Zero.';
       } else {
-        response = 'Thank you for sharing. As your ethical guide, I'm here to support your journey through the Synthsara ecosystem. Would you like to learn more about any specific aspect of our sacred architecture?';
+        response =
+          "Thank you for sharing. This is a scripted local prototype, not a live AI conversation, and it does not speak for Human Sarah. The public documentation can help you explore the current architecture and its limitations.";
       }
-      
-      setConversation(prev => [...prev, { type: 'sarah', text: response }]);
-    }, 1000);
+
+      setConversation((previous) => [
+        ...previous,
+        { type: 'sarah', text: response },
+      ]);
+    }, 500);
   };
 
   return (
@@ -49,73 +70,106 @@ export const SarahAI: React.FC = () => {
           <div className="bg-gradient-to-r from-divine-chaos-600 to-sacred-order-600 text-white p-4 flex justify-between items-center">
             <div className="flex items-center">
               <Bot size={20} className="mr-2" />
-              <h3 className="font-medium">Sarah™ AI</h3>
+              <div>
+                <h3 className="font-medium">Sarah AI prototype</h3>
+                <p className="text-xs opacity-90">Scripted · local · not Genesis</p>
+              </div>
             </div>
-            <button 
+            <button
+              type="button"
               onClick={() => setIsOpen(false)}
               className="text-white hover:text-gray-200 transition"
+              aria-label="Close Sarah AI prototype"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
             </button>
           </div>
-          
-          <div className="flex-1 p-4 overflow-y-auto max-h-80 bg-gray-50">
-            {conversation.map((msg, index) => (
-              <div 
-                key={index} 
-                className={`mb-4 flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}
+
+          <div className="bg-amber-50 border-b border-amber-200 px-3 py-2 text-xs text-amber-950">
+            DEMO: scripted responses only. No message is sent to Genesis or saved by this component.
+          </div>
+
+          <div className="flex-1 p-4 overflow-y-auto max-h-80 bg-gray-50" aria-live="polite">
+            {conversation.map((entry, index) => (
+              <div
+                key={`${entry.type}-${index}`}
+                className={`mb-4 flex ${
+                  entry.type === 'user' ? 'justify-end' : 'justify-start'
+                }`}
               >
-                <div 
-                  className={`max-w-3/4 rounded-lg p-3 ${
-                    msg.type === 'user' 
-                      ? 'bg-divine-chaos-100 text-gray-800' 
+                <div
+                  className={`max-w-[75%] rounded-lg p-3 ${
+                    entry.type === 'user'
+                      ? 'bg-divine-chaos-100 text-gray-800'
                       : 'bg-sacred-order-100 text-gray-800'
                   }`}
                 >
                   <div className="flex items-center mb-1">
-                    {msg.type === 'user' ? (
+                    {entry.type === 'user' ? (
                       <>
                         <span className="font-medium text-sm">You</span>
-                        <User size={14} className="ml-1 text-gray-600" />
+                        <User size={14} className="ml-1 text-gray-600" aria-hidden="true" />
                       </>
                     ) : (
                       <>
-                        <span className="font-medium text-sm">Sarah™</span>
-                        <Bot size={14} className="ml-1 text-sacred-order-600" />
+                        <span className="font-medium text-sm">Sarah AI demo</span>
+                        <Bot
+                          size={14}
+                          className="ml-1 text-sacred-order-600"
+                          aria-hidden="true"
+                        />
                       </>
                     )}
                   </div>
-                  <p className="text-sm">{msg.text}</p>
+                  <p className="text-sm">{entry.text}</p>
                 </div>
               </div>
             ))}
           </div>
-          
+
           <form onSubmit={handleSubmit} className="border-t border-gray-200 p-3 flex">
+            <label className="sr-only" htmlFor="sarah-prototype-message">
+              Message for the scripted Sarah AI prototype
+            </label>
             <input
+              id="sarah-prototype-message"
               type="text"
               value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder="Ask Sarah™ anything..."
+              onChange={(event) => setMessage(event.target.value)}
+              placeholder="Ask about the prototype..."
               className="flex-1 border border-gray-300 rounded-l-lg px-3 py-2 focus:outline-none focus:ring-1 focus:ring-divine-chaos-500"
             />
-            <button 
+            <button
               type="submit"
               className="bg-gradient-to-r from-divine-chaos-600 to-sacred-order-600 text-white px-4 py-2 rounded-r-lg hover:opacity-90 transition"
+              aria-label="Send to scripted prototype"
             >
-              <Send size={18} />
+              <Send size={18} aria-hidden="true" />
             </button>
           </form>
         </div>
       ) : (
         <button
+          type="button"
           onClick={() => setIsOpen(true)}
           className="bg-gradient-to-r from-divine-chaos-600 to-sacred-order-600 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition flex items-center justify-center"
+          aria-label="Open scripted Sarah AI prototype"
         >
-          <MessageCircle size={24} />
+          <MessageCircle size={24} aria-hidden="true" />
         </button>
       )}
     </div>

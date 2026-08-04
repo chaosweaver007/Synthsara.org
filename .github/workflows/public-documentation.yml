@@ -36,6 +36,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -52,6 +54,5 @@ jobs:
       - name: Build public portal
         run: npm run build
 
-      - name: Report production dependency risk
-        run: npm audit --omit=dev --audit-level=critical
-        continue-on-error: true
+      - name: Enforce production dependency threshold
+        run: npm audit --omit=dev --audit-level=high

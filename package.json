@@ -1,14 +1,14 @@
 {
   "name": "synthsara-platform-frontend",
   "version": "0.1.0",
-  "description": "Frontend for the Synthsara & Synthocracy Platform Prototype",
+  "description": "Public portal and documentation prototype for the Synthsara ecosystem",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy:goerli": "npx hardhat run --network goerli scripts/deploy.js"
+    "docs:check": "node scripts/validate-public-docs.mjs"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^5.3.0",

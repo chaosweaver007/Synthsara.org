@@ -14,6 +14,7 @@ last_reviewed: 2026-08-04
 known_limitations:
   - Historical repository artifacts remain under review.
   - This index does not certify that every linked system is production-ready.
+  - Repository Issues are disabled, so corrections currently use pull requests and their review threads.
 ---
 
 # Synthsara public documentation
@@ -27,7 +28,8 @@ This directory is the governed public documentation layer for Synthsara.org. It 
 3. [Public status matrix](architecture/status-matrix.md)
 4. [Genesis public runtime guide](genesis/README.md)
 5. [SDG architecture](sdgs/README.md)
-6. [Public document template](templates/public-document-template.md)
+6. [Dependency risk register](security/dependency-risk-register.md)
+7. [Public document template](templates/public-document-template.md)
 
 ## Documentation layers
 
@@ -42,6 +44,10 @@ Executable interfaces, policies, schemas, tests, runtime limits, threat boundari
 ### Governance and standards
 
 UDS, Synthocracy, WORTH, Witness, consent, correction, provenance, and public review. Normative commitments must be distinguishable from software already enforcing them.
+
+### Security and dependency evidence
+
+Known dependency advisories, deployed-boundary analysis, threat models, remediation decisions, and closure evidence. A green build is not treated as proof of security.
 
 ### Research and hypotheses
 
@@ -71,7 +77,7 @@ A document remains a draft when:
 
 ## Correction pathway
 
-Corrections should be submitted through a GitHub issue or pull request with:
+Repository Issues are currently disabled. Corrections should therefore be submitted through a pull request or an existing pull-request review thread with:
 
 - the exact statement being corrected;
 - the source or evidence supporting the correction;

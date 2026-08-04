@@ -1,29 +1,31 @@
 ---
 title: Synthsara.org Dependency Risk Register
-summary: Records the known dependency risk exposed during the first UDS-governed public portal build.
+summary: Records dependency-risk evidence and the enforced production threshold for the public portal.
 owner: Synthsara.org maintainers
 registry_id: SYN-SEC-WEB-001
 claim_class: EMPIRICAL EVIDENCE
-implementation_status: DRAFT
-canonical_status: candidate
+implementation_status: FUNCTIONAL PROTOTYPE
+canonical_status: active
 public_visibility: public
 source_links:
-  - https://github.com/chaosweaver007/Synthsara.org/actions/runs/30905204553
+  - https://github.com/chaosweaver007/Synthsara.org/actions/runs/30940756869
   - ../../package.json
   - ../../package-lock.json
+  - ../../.github/workflows/public-documentation.yml
 last_reviewed: 2026-08-04
 known_limitations:
-  - The reported counts come from npm audit during one locked dependency installation and can change as advisories or packages change.
-  - The current record does not yet identify which findings affect the deployed public route, development-only tooling, historical contract code, or unused prototype components.
+  - A clean package audit is not a penetration test, threat model, configuration review, or proof that no undisclosed vulnerability exists.
+  - Advisory data changes over time, so the result applies only to the committed lockfile and the registry state at the recorded run.
+  - Historical prototype files remain in the repository but are not imported by the public portal route.
 ---
 
 # Synthsara.org dependency risk register
 
-> **Current status:** unresolved dependency debt. The public portal builds, but the repository must not be described as security-reviewed or production-ready.
+> **Current status:** the public portal's locked production dependency graph passes the enforced high-severity npm audit threshold. This closes the previously recorded advisory matches for the portal dependency boundary, but it does not establish complete production security.
 
-## Observed result
+## Initial finding
 
-During the first UDS-governed GitHub Actions build, `npm ci` reported:
+The first UDS-governed portal build installed a mixed dependency tree containing public web packages, historical contract tooling, visualization libraries, form libraries, request libraries, and unused prototype components. That installation reported:
 
 | Severity | Count |
 | --- | ---: |
@@ -33,67 +35,68 @@ During the first UDS-governed GitHub Actions build, `npm ci` reported:
 | Critical | 2 |
 | **Total** | **48** |
 
-The result was produced from the committed `package-lock.json` while installing 667 audited packages. The public documentation check and Next.js production build passed after legacy type and dependency errors were repaired, but a successful build does not neutralize security advisories.
+A production-only audit still reported 14 findings: 3 moderate, 9 high, and 2 critical. The original workflow exposed the result but allowed the audit step to fail without failing the job.
 
-## What this evidence does and does not mean
+## Repair completed
 
-This result means the current mixed-generation dependency tree contains known advisory matches that require triage.
+The public route was traced to its actual runtime boundary. It uses the Next.js Pages Router and React rendering and does not import the historical Axios, Hardhat, Solidity, OpenZeppelin, D3, Formik, Framer Motion, Zustand, Three.js, or other prototype packages.
 
-It does not yet establish:
+The repair therefore:
 
-- that all 48 findings are remotely exploitable through the current public page;
-- that none of them are exploitable;
-- that development-only findings can be ignored;
-- that an automatic forced upgrade would be safe;
-- that the portal has passed penetration testing, threat modeling, or independent review.
+1. removed unused runtime and historical tooling from the portal package manifest;
+2. reduced direct runtime dependencies to Next.js, React, and React DOM;
+3. upgraded Next.js to the patched 16.3.0 release line;
+4. regenerated the lockfile from the reduced manifest;
+5. ran `npm audit --omit=dev --audit-level=high` against the regenerated graph;
+6. received `found 0 vulnerabilities` from the recorded GitHub Actions run;
+7. changed normal CI so a high or critical production advisory fails the required portal job;
+8. disabled persisted checkout credentials in the validation workflow.
 
-The repository still combines public web dependencies, historical Hardhat and Solidity tooling, old prototype components, and packages that may no longer belong in the public portal. That mixture inflates both attack surface and audit ambiguity.
+## Current locked boundary
 
-## UDS impact
+Direct production dependencies:
+
+- `next` 16.3.0
+- `react` 19.2.8
+- `react-dom` 19.2.8
+
+Direct development dependencies are limited to TypeScript and React/Node type declarations. The lockfile also contains transitive and platform-specific optional packages required by Next.js.
+
+## UDS assessment
 
 ### Security
 
-Known critical and high findings block any claim of production security until they are understood and repaired or explicitly shown to be unreachable in the deployed boundary.
+Known high and critical advisory matches are no longer accepted as a warning-only condition. The production audit threshold is enforced on pull requests and pushes to `main`.
 
 ### Transparency
 
-The counts, source run, limitations, and repair status remain public. A green build badge must not conceal audit debt.
+The initial failure counts remain recorded rather than erased. The repair run, manifest, lockfile, and workflow are linked as evidence.
 
 ### Accountability
 
-Each unresolved advisory family needs an owner, affected package path, runtime reachability assessment, selected remedy, regression tests, and closure evidence.
+A future high or critical production advisory blocks the portal validation job until the package is upgraded, removed, isolated, or explicitly redesigned out of the deployed boundary.
 
 ### Privacy
 
-Any advisory affecting request handling, client rendering, storage, authentication, environment variables, server functions, or dependency installation receives priority because it could cross user-data or credential boundaries.
+Removing unused request, state, form, contract, and data-processing libraries reduces the number of packages capable of crossing user-data, credential, or network boundaries.
 
 ### Ecology
 
-Removing unused packages and separating historical projects reduces installation cost, maintenance load, supply-chain surface, and repeated CI consumption.
+The smaller graph reduces installation work, CI transfer, maintenance surface, and supply-chain exposure.
 
-## Repair sequence
+## Remaining security work
 
-1. Run and preserve full `npm audit --json` output for the current lockfile.
-2. Separate runtime dependencies from development and historical contract dependencies.
-3. Identify packages unused by the new public portal.
-4. Remove unused packages before attempting broad upgrades.
-5. Move governance-contract tooling into a dedicated repository or isolated package if it remains active.
-6. Upgrade direct dependencies deliberately, one family at a time.
-7. Rebuild, run documentation validation, and test the rendered portal after each change.
-8. Assess remaining advisories for runtime reachability and compensating controls.
-9. Add an enforced production dependency threshold once the legacy tree is reduced.
-10. Record closure evidence in this register and the related pull request or issue.
+A clean package audit does not replace:
+
+- deployed configuration review;
+- content-security-policy and security-header validation;
+- threat modeling;
+- secret and environment-variable review;
+- access-control testing;
+- privacy testing;
+- incident-response ownership;
+- independent application testing.
 
 ## Production threshold
 
-The portal cannot move from `STATIC PROTOTYPE` to `PRODUCTION` while:
-
-- critical dependency findings remain unresolved;
-- high findings lack reachability analysis and explicit acceptance or repair;
-- unused historical dependencies remain bundled into the public application;
-- no threat model exists for the deployed route;
-- incident response and dependency-update ownership remain undefined.
-
-## Known limitations
-
-Advisory counts are a moving signal, not a complete security assessment. They must be combined with code review, deployed-boundary analysis, configuration review, threat modeling, access-control testing, privacy review, and independent testing appropriate to the system's consequence level.
+The portal may be described as having a **clean enforced production dependency audit at the recorded lockfile revision**. It must not be described as fully security-reviewed or penetration-tested until those separate controls and evidence exist.

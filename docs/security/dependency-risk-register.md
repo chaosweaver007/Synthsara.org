@@ -4,8 +4,8 @@ summary: Records dependency-risk evidence and the enforced production threshold 
 owner: Synthsara.org maintainers
 registry_id: SYN-SEC-WEB-001
 claim_class: EMPIRICAL EVIDENCE
-implementation_status: FUNCTIONAL PROTOTYPE
-canonical_status: active
+implementation_status: FUNCTIONAL PROOF
+canonical_status: candidate
 public_visibility: public
 source_links:
   - https://github.com/chaosweaver007/Synthsara.org/actions/runs/30940756869

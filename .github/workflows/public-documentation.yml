@@ -1,0 +1,53 @@
+name: Public documentation and portal
+
+on:
+  pull_request:
+    paths:
+      - 'README.md'
+      - 'CONTRIBUTING.md'
+      - 'docs/**'
+      - 'pages/**'
+      - 'scripts/validate-public-docs.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/public-documentation.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'README.md'
+      - 'CONTRIBUTING.md'
+      - 'docs/**'
+      - 'pages/**'
+      - 'scripts/validate-public-docs.mjs'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/public-documentation.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate UDS documentation
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Validate public document metadata and boundaries
+        run: npm run docs:check
+
+      - name: Build public portal
+        run: npm run build

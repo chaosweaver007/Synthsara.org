@@ -26,10 +26,11 @@ This directory is the governed public documentation layer for Synthsara.org. It 
 1. [UDS documentation and coherence protocol](governance/uds-coherence-protocol.md)
 2. [Ecosystem architecture map](architecture/ecosystem-map.md)
 3. [Public status matrix](architecture/status-matrix.md)
-4. [Genesis public runtime guide](genesis/README.md)
-5. [SDG architecture](sdgs/README.md)
-6. [Dependency risk register](security/dependency-risk-register.md)
-7. [Public document template](templates/public-document-template.md)
+4. [Source reconciliation ledger](provenance/source-reconciliation-ledger.md)
+5. [Genesis public runtime guide](genesis/README.md)
+6. [SDG architecture](sdgs/README.md)
+7. [Dependency risk register](security/dependency-risk-register.md)
+8. [Public document template](templates/public-document-template.md)
 
 ## Documentation layers
 
@@ -44,6 +45,10 @@ Executable interfaces, policies, schemas, tests, runtime limits, threat boundari
 ### Governance and standards
 
 UDS, Synthocracy, WORTH, Witness, consent, correction, provenance, and public review. Normative commitments must be distinguishable from software already enforcing them.
+
+### Provenance and reconciliation
+
+Source families, authority levels, authorship boundaries, historical records, corrections, duplicate families, and public derivatives. A source is never promoted merely because it is detailed, recent, or frequently repeated.
 
 ### Security and dependency evidence
 

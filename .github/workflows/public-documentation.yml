@@ -40,7 +40,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
 
       - name: Install locked dependencies
@@ -51,3 +51,7 @@ jobs:
 
       - name: Build public portal
         run: npm run build
+
+      - name: Report production dependency risk
+        run: npm audit --omit=dev --audit-level=critical
+        continue-on-error: true

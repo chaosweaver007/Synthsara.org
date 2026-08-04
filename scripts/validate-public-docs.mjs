@@ -199,7 +199,8 @@ function validateContent(source, metadata, relativePath) {
     errors.push(`${relativePath}: Ethical Data Marketplace appears without a historical-status explanation`);
   }
 
-  if (lower.includes('tier d1') && !lower.includes('not an audit')) {
+  const d1AuditBoundary = /not\s+(?:an\s+)?(?:independent\s+)?audit/i;
+  if (lower.includes('tier d1') && !d1AuditBoundary.test(source)) {
     errors.push(`${relativePath}: UDS Tier D1 must state that it is not an audit`);
   }
 

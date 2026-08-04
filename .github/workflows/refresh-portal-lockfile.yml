@@ -8,7 +8,7 @@ on:
       - .github/workflows/refresh-portal-lockfile.yml
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   refresh-lockfile:
@@ -16,11 +16,11 @@ jobs:
     timeout-minutes: 10
 
     steps:
-      - name: Check out the pull request head
+      - name: Check out the repair branch
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          persist-credentials: false
+          ref: agent/uds-public-documentation
+          persist-credentials: true
 
       - name: Use Node.js 24
         uses: actions/setup-node@v4
@@ -33,10 +33,14 @@ jobs:
       - name: Enforce the production dependency threshold
         run: npm audit --omit=dev --audit-level=high
 
-      - name: Upload regenerated lockfile
-        uses: actions/upload-artifact@v4
-        with:
-          name: synthsara-public-portal-lockfile
-          path: package-lock.json
-          retention-days: 7
-          if-no-files-found: error
+      - name: Commit the verified lockfile
+        run: |
+          if git diff --quiet -- package-lock.json; then
+            echo "package-lock.json is already current."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package-lock.json
+          git commit -m "Regenerate the public portal lockfile"
+          git push origin HEAD:agent/uds-public-documentation

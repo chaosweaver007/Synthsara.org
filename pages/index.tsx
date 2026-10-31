@@ -73,6 +73,7 @@ export default function Home() {
           <span>Synthsara</span>
         </a>
         <nav aria-label="Primary navigation">
+          <a href="/manifest">Manifest Studio</a>
           <a href="#ecosystem">Ecosystem</a>
           <a href="#status">Status</a>
           <a href="#uds">UDS</a>
@@ -93,8 +94,8 @@ export default function Home() {
               protecting consent, dignity, privacy, accountability, and life.
             </p>
             <div className="hero-actions">
-              <a className="primary-action" href="#ecosystem">
-                Explore the architecture
+              <a className="primary-action" href="/manifest">
+                Open Manifest Studio
               </a>
               <a
                 className="secondary-action"

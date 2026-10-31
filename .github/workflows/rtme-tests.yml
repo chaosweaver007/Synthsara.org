@@ -1,0 +1,33 @@
+name: RTME local-draft contracts
+
+on:
+  pull_request:
+    paths:
+      - 'lib/rtme-draft.mjs'
+      - 'pages/manifest.tsx'
+      - 'tests/rtme-draft.test.mjs'
+      - '.github/workflows/rtme-tests.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'lib/rtme-draft.mjs'
+      - 'pages/manifest.tsx'
+      - 'tests/rtme-draft.test.mjs'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Test consent, safeguards, scope and receipts
+        run: node --test tests/rtme-draft.test.mjs

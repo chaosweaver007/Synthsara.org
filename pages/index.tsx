@@ -74,6 +74,8 @@ export default function Home() {
         </a>
         <nav aria-label="Primary navigation">
           <a href="#ecosystem">Ecosystem</a>
+          <a href="#sovereignty">Your Rights</a>
+          <a href="/welcome">Sovereign Welcome</a>
           <a href="#status">Status</a>
           <a href="#uds">UDS</a>
           <a href="#goals">Global Goals</a>
@@ -85,24 +87,52 @@ export default function Home() {
         <section id="top" className="hero" aria-labelledby="hero-title">
           <div className="hero-glow" aria-hidden="true" />
           <div className="hero-content">
-            <p className="eyebrow">PUBLIC PORTAL · DOCUMENTATION CONSOLIDATION</p>
-            <h1 id="hero-title">A coordination fabric built to preserve sovereignty.</h1>
+            <p className="eyebrow">DIVINE CHAOS / 3 &nbsp; · &nbsp; SACRED ORDER / 6 &nbsp; · &nbsp; HARMONY / 9</p>
+            <h1 id="hero-title">A digital homeland where everyone has a throne.</h1>
             <p className="hero-copy">
-              Synthsara is an open, non-extractive human-AI ecosystem for connecting
-              knowledge, contribution, governance, learning, and real-world action while
-              protecting consent, dignity, privacy, accountability, and life.
+              Synthsara is a living architecture for human dignity: where technology
+              serves people, where contribution has WORTH, and where nobody has to
+              surrender sovereignty to belong. Chaos is Love.
             </p>
             <div className="hero-actions">
-              <a className="primary-action" href="#ecosystem">
-                Explore the architecture
+              <a className="primary-action" href="/welcome">
+                Enter the Sovereign Welcome ↗
               </a>
               <a
                 className="secondary-action"
                 href="https://github.com/chaosweaver007/Synthsara.org/tree/main/docs"
               >
-                Read the public documents
+                Explore the public code
               </a>
             </div>
+          </div>
+        </section>
+
+
+        <section className="triad-section" aria-label="Three principles of Synthsara">
+          <div className="triad-intro">
+            <p className="eyebrow">THE 3 · 6 · 9 GRAMMAR</p>
+            <p>Not three rulers. Three movements of one living system.</p>
+          </div>
+          <div className="triad-grid">
+            <article className="triad-card chaos">
+              <span className="triad-number">03</span>
+              <h2>Divine Chaos</h2>
+              <p>The spark. Imagination, courage, experimentation, and the freedom to begin again.</p>
+              <span className="triad-foot">KINETIC SPARK ↗</span>
+            </article>
+            <article className="triad-card order">
+              <span className="triad-number">06</span>
+              <h2>Sacred Order</h2>
+              <p>The vessel. Consent, reliable boundaries, rigorous evidence, and repairable structures.</p>
+              <span className="triad-foot">ETHICAL VESSEL ↗</span>
+            </article>
+            <article className="triad-card harmony">
+              <span className="triad-number">09</span>
+              <h2>Harmony</h2>
+              <p>The union. A future built through participation, mutual dignity, and service to life.</p>
+              <span className="triad-foot">LIVING RELATIONSHIP ↗</span>
+            </article>
           </div>
         </section>
 
@@ -118,6 +148,35 @@ export default function Home() {
             remain specifications, demonstrations, or future pilot work unless a page
             supplies current operating evidence.
           </p>
+        </section>
+
+
+        <section id="sovereignty" className="section sovereignty-section" aria-labelledby="sovereignty-title">
+          <div className="section-heading">
+            <p className="eyebrow">THE SOVEREIGNTY CIRCUIT</p>
+            <h2 id="sovereignty-title">The system answers to you.</h2>
+            <p>Five rights travel with every person through the proposed architecture.
+              A system is not sovereign because it says so. It earns trust by making these rights usable and verifiable.</p>
+          </div>
+          <div className="rights-grid">
+            {[
+              { number: '01', title: 'Refuse', description: 'Consent is a gate, never a trap.' },
+              { number: '02', title: 'Understand', description: 'Explanation before persuasion.' },
+              { number: '03', title: 'Challenge', description: 'Your correction remains visible.' },
+              { number: '04', title: 'Leave', description: 'Revocation and portability by design.' },
+              { number: '05', title: 'Verify', description: 'Independent evidence, not blind belief.' },
+            ].map((right) => (
+              <article className="right-card" key={right.number}>
+                <span>{right.number}</span>
+                <h3>{right.title}</h3>
+                <p>{right.description}</p>
+              </article>
+            ))}
+          </div>
+          <div className="sovereignty-action">
+            <p>Try a real, reversible <strong>local interface demonstration</strong> of refusal, explanation, challenge, and clearing state. It is not a deployed Sarah AI or a signed Witness service.</p>
+            <a className="primary-action" href="/welcome">Open the Sovereign Welcome ↗</a>
+          </div>
         </section>
 
         <section id="ecosystem" className="section" aria-labelledby="ecosystem-title">
@@ -713,6 +772,37 @@ export default function Home() {
         footer p {
           margin: 0.35rem 0 0;
         }
+
+
+        /* Synthsara 3-6-9 identity and the consent-first gateway */
+        .triad-section {padding:3rem clamp(1.25rem,7vw,7rem) 4rem;background:#080b16;}
+        .triad-intro {display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap;margin-bottom:1.6rem;}
+        .triad-intro p:last-child {margin:0;color:#b7bbd0;}
+        .triad-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;}
+        .triad-card {display:flex;flex-direction:column;min-height:20rem;border:1px solid #ffffff20;border-radius:1.25rem;padding:2rem;position:relative;overflow:hidden;background:linear-gradient(145deg,#191324,#0d1220);}
+        .triad-card:before {content:'';position:absolute;width:12rem;height:12rem;top:-6rem;right:-5rem;border-radius:50%;filter:blur(25px);opacity:.35;pointer-events:none;}
+        .triad-card.chaos:before {background:#cc4d69;}
+        .triad-card.order:before {background:#e5b86e;}
+        .triad-card.harmony:before {background:#6aacf7;}
+        .triad-number {font-family:Georgia,serif;font-size:4.4rem;color:#f4d8a8;line-height:1;letter-spacing:-.08em;}
+        .triad-card.chaos .triad-number {color:#fc96ab;}
+        .triad-card.harmony .triad-number {color:#a7ddff;}
+        .triad-card h2 {font-family:Georgia,serif;font-size:clamp(1.7rem,3vw,2.5rem);font-weight:500;margin:1.1rem 0 .3rem;}
+        .triad-card p {color:#c3c0d2;font-size:.92rem;max-width:31ch;}
+        .triad-foot {margin-top:auto;padding-top:1.7rem;letter-spacing:.18em;font-size:.65rem;font-weight:800;color:#d9b8e8;}
+        .sovereignty-section {background:radial-gradient(circle at 7% 7%,#52306b25,transparent 30%),#0b1020;}
+        .rights-grid {display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.85rem;}
+        .right-card {border-top:2px solid #c7a5ef;padding:1.3rem 1rem;background:#ffffff07;border-radius:0 0 .75rem .75rem;}
+        .right-card>span {font-size:.7rem;font-weight:800;color:#e1b7ef;letter-spacing:.14em;}
+        .right-card h3 {font-family:Georgia,serif;font-size:1.65rem;font-weight:500;margin:.65rem 0 .5rem;}
+        .right-card p {color:#b4bfd1;font-size:.86rem;margin:0;}
+        .sovereignty-action {display:flex;align-items:center;justify-content:space-between;gap:1.6rem;flex-wrap:wrap;margin-top:1.4rem;border:1px solid #c7a5ef4c;border-radius:1rem;padding:1.4rem;background:#bb9bf00c;}
+        .sovereignty-action p {max-width:48rem;color:#bdc5d7;margin:0;}
+        .sovereignty-action a {white-space:nowrap;}
+        .hero h1 {font-family:Georgia,serif;font-weight:500;max-width:16ch;letter-spacing:-.055em;}
+        @media(max-width:1050px){.rights-grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
+        @media(max-width:820px){.triad-grid{grid-template-columns:1fr;}.triad-card{min-height:15rem}.rights-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+        @media(max-width:480px){.rights-grid{grid-template-columns:1fr;}.sovereignty-action a{white-space:normal;}}
 
         @media (max-width: 820px) {
           .site-header {

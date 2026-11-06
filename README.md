@@ -1,8 +1,8 @@
 # Synthsara.org
 
-**Public portal and documentation hub for the Synthsara ecosystem**
+**Public gateway, Sovereign Welcome demonstration, and documentation hub for the Synthsara ecosystem**
 
-> **Current status:** repository consolidation and public documentation pass. The interface code in this repository is a historical/static prototype unless a page explicitly states otherwise. Sample dashboards, proposals, balances, transactions, votes, and controls are not evidence of an operating service.
+> **Current status:** a Next.js public portal with a local-only, consent-first `/welcome` demonstration. The broader ecosystem remains a collection of prototypes, proofs, and specifications; neither the page nor other legacy components establishes a production Sarah AI, voting service, token economy, or live global network.
 
 Synthsara is an open, non-extractive human-AI ecosystem for coordinating knowledge, contribution, governance, learning, and real-world action while preserving sovereignty, consent, dignity, privacy, and accountability.
 
@@ -87,6 +87,14 @@ This repository currently contains mixed generations of frontend, governance-con
 
 Do not treat the current repository layout as a production architecture. Do not deploy contracts, connect wallets, collect personal data, or enable consequential actions from this code without a separate security, privacy, legal, accessibility, and UDS review.
 
+## Public website experience
+
+- **`/`**: 3–6–9 philosophy, Sovereignty Circuit, implementation boundaries, UDS principles, SDG architecture, and public source links.
+- **`/welcome`**: a client-side, local-only demonstration of consent, refusal, exploration, challenge, and revocation. The optional text is held only in React component state. There is no upload, AI endpoint, analytics integration, persistence, or signed receipt in this route.
+- The older root React components remain historical prototypes, not integrated live services.
+
+This public website draws on the design direction in `synth-landing-refinement`, the documented boundaries of `Genesis`, and the interactive domain concepts explored in `prototype`. It does **not** ship the private prototype backend or require private keys.
+
 ## Development
 
 The current package declares the following scripts:
@@ -95,10 +103,10 @@ The current package declares the following scripts:
 npm install
 npm run dev
 npm run build
-npm run lint
+npm run docs:check
 ```
 
-A successful local build does not change the implementation status of simulated features. Operational status requires the evidence described in the documentation protocol.
+The new public website is a front-end gateway and local demonstration, not a production protocol launch. A successful local build does not change the implementation status of simulated features. Operational status requires the evidence described in the documentation protocol.
 
 ## Universal Diamond Standard gate
 

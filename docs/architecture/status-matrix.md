@@ -12,7 +12,7 @@ source_links:
   - https://github.com/chaosweaver007/synthsara-node-zero
   - https://github.com/chaosweaver007/synthsara-codex-core
   - ../../README.md
-last_reviewed: 2026-08-04
+last_reviewed: 2026-11-06
 known_limitations:
   - Status reflects inspected public repositories and supplied architecture documents.
   - Uninspected deployments, private services, or later commits may require reconciliation.
@@ -24,7 +24,7 @@ This matrix prevents planned capability from masquerading as present capability.
 
 | System or surface | Claim class | Current status | Evidence currently visible | Boundary or missing proof |
 | --- | --- | --- | --- | --- |
-| Synthsara.org public portal | Engineering requirement | Static prototype / documentation consolidation | Next.js and React prototype files, public repository history | Mixed project generations; build and information architecture require consolidation |
+| Synthsara.org public portal | Engineering requirement | Static prototype + local-only interactive demonstration | Next.js public gateway, 3–6–9 sections, Sovereignty Circuit, and `/welcome` consent/refusal/challenge/clear UX | A UI proof is not a production service; no live AI model, persistent identity, governance, or signed receipts on the welcome page |
 | Genesis O-Series Gate Zero | Engineering requirement | Live shadow runtime | Public Flask entrypoint, health/status/chat endpoints, policies, tests, source map | Stateless and bounded; no durable memory, tools, collective learning, or identity system |
 | Node Zero | Engineering requirement | Functional proof | Local-first interface, same-origin Genesis proxy, privacy and conformance tests | Browser localStorage is not an encrypted vault; governance and WORTH remain demonstrations |
 | Codex Core | Mythos / interpretive language | Living mythic repository | Scrolls, prompts, patterns, quests, contribution structure | Does not prove production capabilities or scientific claims |

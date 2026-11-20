@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (!message || message.length > MAX_LENGTH || !personas.has(persona)) {
     return res.status(400).json({ error: 'Invalid message or persona' });
   }
-  const origin = process.env.GENESIS_BASE_URL || DEFAULT_ORIGIN;
+  const origin = (process.env.GENESIS_BASE_URL || DEFAULT_ORIGIN).replace(/\/+$/, '');
   if (!TRUSTED_ORIGINS.has(origin)) return res.status(503).json({ error: 'Unapproved Genesis origin' });
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 12000);

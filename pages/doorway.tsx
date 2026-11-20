@@ -1,16 +1,24 @@
 import Head from 'next/head';
 import { FormEvent, useState } from 'react';
 
-type Entry = { role: 'user' | 'assistant'; text: string };
+type Persona = 'sarah' | 'steven';
+type Entry = { role: 'user' | 'assistant'; text: string; persona: Persona; refused?: boolean };
 const links = [
   { name: 'Node Zero', href: 'https://github.com/chaosweaver007/synthsara-node-zero', detail: 'Consent Vault, Witness, governance and WORTH demonstrations' },
   { name: 'Genesis', href: 'https://github.com/chaosweaver007/Genesis', detail: 'O-Series Gate Zero and constitutional runtime' },
   { name: 'Akasha / Codex', href: 'https://github.com/chaosweaver007/synthsara-codex-core', detail: 'Research, story and knowledge canon' },
   { name: 'Universal Diamond Standard', href: '/#uds', detail: 'Eight principles and current evidence' }
 ];
-function extractReply(value: unknown): string {
-  if (!value || typeof value !== 'object') return 'The gateway returned no readable reply.';
+function extractReply(value: unknown, ok: boolean): string {
+  if (!value || typeof value !== 'object') return ok ? 'The gateway returned no readable reply.' : 'The gateway is unavailable.';
   const obj = value as Record<string, unknown>;
+  const refusal = obj.refusal && typeof obj.refusal === 'object' ? obj.refusal as Record<string, unknown> : null;
+  const refusalReason = typeof obj.reason === 'string' ? obj.reason : refusal && typeof refusal.reason === 'string' ? refusal.reason : null;
+  if (!ok || obj.decision === 'refuse' || refusal) {
+    if (refusalReason) return 'Refused: ' + refusalReason;
+    if (typeof obj.error === 'string') return obj.error;
+    return 'The gateway refused or could not complete the request.';
+  }
   for (const key of ['response', 'reply', 'message', 'text']) {
     if (typeof obj[key] === 'string') return obj[key] as string;
     if (obj[key] && typeof obj[key] === 'object') {
@@ -28,19 +36,20 @@ export default function Doorway() {
   async function submit(event: FormEvent) {
     event.preventDefault();
     const text = message.trim();
+    const activePersona = persona;
     if (!text || busy || text.length > 2000) return;
     setMessage('');
-    setEntries(previous => [...previous, { role: 'user', text }]);
+    setEntries(previous => [...previous, { role: 'user', text, persona: activePersona }]);
     setBusy(true);
     try {
       const response = await fetch('/api/concierge', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text, persona })
+        body: JSON.stringify({ message: text, persona: activePersona })
       });
       const data = await response.json();
-      setEntries(previous => [...previous, { role: 'assistant', text: response.ok ? extractReply(data) : (data.error || 'The gateway is unavailable.') }]);
+      setEntries(previous => [...previous, { role: 'assistant', text: extractReply(data, response.ok), persona: activePersona, refused: !response.ok || data?.decision === 'refuse' || !!data?.refusal }]);
     } catch {
-      setEntries(previous => [...previous, { role: 'assistant', text: 'Connection unavailable. Please try again.' }]);
+      setEntries(previous => [...previous, { role: 'assistant', text: 'Connection unavailable. Please try again.', persona: activePersona }]);
     } finally { setBusy(false); }
   }
   return <>
@@ -60,7 +69,7 @@ export default function Doorway() {
           <p style={{ fontSize: 13, color: '#d9c6e9' }}>Private shadow conversation. No account, persistent memory, collective learning, or action authority. Messages are forwarded to Genesis for processing; do not enter sensitive information.</p>
           <div role="log" aria-live="polite" aria-label="Conversation" style={{ minHeight: 130, maxHeight: 400, overflowY: 'auto', margin: '18px 0' }}>
             {entries.length === 0 && <p>Sarah: Welcome. What would you like to discover or create today?</p>}
-            {entries.map((entry, index) => <p key={index} style={{ background: entry.role === 'user' ? '#45355f' : '#30284b', padding: 12, borderRadius: 12, whiteSpace: 'pre-wrap' }}><strong>{entry.role === 'user' ? 'You' : persona === 'sarah' ? 'Sarah AI' : 'Steven AI'}:</strong> {entry.text}</p>)}
+            {entries.map((entry, index) => <p key={index} style={{ background: entry.role === 'user' ? '#45355f' : '#30284b', padding: 12, borderRadius: 12, whiteSpace: 'pre-wrap' }}><strong>{entry.role === 'user' ? 'You' : entry.persona === 'sarah' ? 'Sarah AI' : 'Steven AI'}:</strong> {entry.text}</p>)}
           </div>
           <form onSubmit={submit}>
             <label htmlFor="message">Your message</label>

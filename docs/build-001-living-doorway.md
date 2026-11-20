@@ -1,3 +1,21 @@
+---
+title: Build 001 Living Doorway
+summary: Bounded Sarah AI and Steven AI concierge portal with private shadow Genesis gateway
+owner: Synthsara
+registry_id: SYN-WEB-BUILD-001
+claim_class: ENGINEERING REQUIREMENT
+implementation_status: DRAFT
+canonical_status: candidate
+public_visibility: public
+source_links:
+  - https://github.com/chaosweaver007/Synthsara.org/pull/5
+  - https://github.com/chaosweaver007/Genesis
+known_limitations:
+  - Gateway contract and production deployment have not been independently verified
+  - No persistent identity or collective agent is available
+last_reviewed: 2026-11-20
+---
+
 # Build 001 — Living Doorway
 Branch: build-001-sarah-living-doorway
 

@@ -1,7 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import handler from '../pages/api/concierge.ts';
+import conciergeModule from '../pages/api/concierge.ts';
+const handler = conciergeModule.default ?? conciergeModule;
 
 const api = readFileSync(new URL('../pages/api/concierge.ts', import.meta.url), 'utf8');
 const page = readFileSync(new URL('../pages/doorway.tsx', import.meta.url), 'utf8');

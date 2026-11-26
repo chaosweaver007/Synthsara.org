@@ -1,0 +1,30 @@
+name: Repair production dependencies (temporary)
+on:
+  push:
+    branches: [build-001-sarah-living-doorway]
+    paths: ['.github/workflows/repair-production-dependencies.yml']
+permissions:
+  contents: read
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: |
+          npm install next@16.4.6 --save-exact --ignore-scripts
+          npm audit fix --ignore-scripts
+          npm ci
+          npm run docs:check
+          npm run build
+          npm audit --omit=dev --audit-level=high
+      - uses: actions/upload-artifact@v4
+        with:
+          name: repaired-dependency-files
+          path: |
+            package.json
+            package-lock.json
